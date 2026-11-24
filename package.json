@@ -1,5 +1,5 @@
 {
-  "name": "@kaamos/open-design-tokens",
+  "name": "@kaamos-project/open-design-tokens",
   "version": "0.0.0-dev",
   "description": "Kaamos design tokens (W3C DTCG) and shared assets, generated for CSS, Tailwind CSS v4 and Flutter.",
   "license": "GPL-3.0-only",
