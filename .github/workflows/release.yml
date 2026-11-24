@@ -94,27 +94,40 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write # firma di provenienza npm (--provenance)
+      # Trusted Publishing: GitHub firma un token OIDC che dice "sono il workflow
+      # release.yml di kaamos-project/open-design-tokens". npm lo verifica e
+      # concede la pubblicazione: nessun token segreto salvato da nessuna parte.
+      id-token: write
     steps:
       # Pubblichiamo ESATTAMENTE il commit taggato: quello che contiene dist/.
       - uses: actions/checkout@v4
         with:
           ref: v${{ inputs.version }}
 
+      # Niente registry-url: setup-node scriverebbe un .npmrc con un token finto
+      # (NODE_AUTH_TOKEN) che ha la precedenza su OIDC e fa fallire il publish.
+      # Il registry di default è già https://registry.npmjs.org.
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
-          registry-url: https://registry.npmjs.org
+          node-version: 24
+
+      # Trusted Publishing richiede npm >= 11.5.1.
+      - name: Versione di npm
+        run: |
+          npm install -g npm@^11.5.1
+          npm --version
 
       - name: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          if [ -z "$NODE_AUTH_TOKEN" ]; then
-            echo "::warning::Secret NPM_TOKEN assente: pacchetto npm NON pubblicato (tag e GitHub Release sono stati creati)."
+          NAME="$(node -p "require('./package.json').name")"
+          # Il primissimo publish non può passare da OIDC: il trusted publisher
+          # si configura nelle impostazioni del pacchetto, che deve già esistere.
+          if ! npm view "$NAME" name >/dev/null 2>&1; then
+            echo "::warning::$NAME non esiste ancora su npm: va pubblicato la prima volta a mano (vedi README, 'Prima release su npm'). Tag e GitHub Release sono stati creati."
             npm pack --dry-run
             exit 0
           fi
           TAG_ARGS=()
           [[ "${{ inputs.version }}" == *-* ]] && TAG_ARGS=(--tag next)
-          npm publish --provenance --access public "${TAG_ARGS[@]}"
+          # La provenance viene generata in automatico con Trusted Publishing.
+          npm publish --access public "${TAG_ARGS[@]}"
