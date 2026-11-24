@@ -1,0 +1,24 @@
+{
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "sans": {
+        "$value": ["Inter", "Inter Fallback", "system-ui", "sans-serif"],
+        "$description": "Inter è servito in locale (assets/fonts). Inter Fallback è un font di sistema con metriche corrette per evitare il layout shift sul web."
+      }
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "normal": { "$value": 400 },
+      "medium": { "$value": 500 },
+      "semibold": { "$value": 600 }
+    },
+    "features": {
+      "sans": {
+        "$value": ["calt", "kern", "liga", "ss03"],
+        "$description": "Feature OpenType applicate sempre a Inter. ss03 è la 'g' alternativa, firma tipografica del brand. Non è un tipo DTCG standard: i formati la gestiscono a mano.",
+        "$extensions": { "dev.kaamos": { "kind": "fontFeatures" } }
+      }
+    }
+  }
+}

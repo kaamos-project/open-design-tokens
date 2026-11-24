@@ -1,0 +1,48 @@
+# Controllo qualità su ogni PR verso main (e su ogni push su main).
+# Il generato NON viene committato: qui verifichiamo solo che la build funzioni,
+# così main resta sempre pronto per una release (fail fast).
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Fallisce se un JSON è rotto, un alias punta a un token che non esiste
+      # o due token generano lo stesso nome.
+      - run: npm run build
+
+      # Mostra cosa finirebbe nel pacchetto npm, senza pubblicarlo.
+      - run: npm pack --dry-run
+
+      - name: Changelog in formato corretto
+        run: node scripts/changelog.mjs --check
+
+      # Il Dart generato deve compilare: lo analizziamo con Flutter.
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: flutter analyze
+        working-directory: dist/flutter
+        run: |
+          flutter pub get
+          flutter analyze --fatal-infos

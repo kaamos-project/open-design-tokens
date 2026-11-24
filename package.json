@@ -1,0 +1,36 @@
+{
+  "name": "@kaamos/open-design-tokens",
+  "version": "0.0.0-dev",
+  "description": "Kaamos design tokens (W3C DTCG) and shared assets, generated for CSS, Tailwind CSS v4 and Flutter.",
+  "license": "GPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaamos-project/open-design-tokens.git"
+  },
+  "type": "module",
+  "files": [
+    "dist/css",
+    "dist/tailwind",
+    "assets/fonts/*.woff2",
+    "assets/fonts/OFL.txt"
+  ],
+  "exports": {
+    "./tokens.css": "./dist/css/tokens.css",
+    "./fonts.css": "./dist/css/fonts.css",
+    "./tailwind.css": "./dist/tailwind/theme.css",
+    "./fonts/*": "./assets/fonts/*",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "node config/build.mjs"
+  },
+  "devDependencies": {
+    "style-dictionary": "5.8.0"
+  }
+}
