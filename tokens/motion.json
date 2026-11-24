@@ -1,0 +1,18 @@
+{
+  "motion": {
+    "duration": {
+      "$type": "duration",
+      "normal": {
+        "$value": "200ms",
+        "$description": "Durata standard delle transizioni (es. apertura del drawer di navigazione)."
+      }
+    },
+    "easing": {
+      "$type": "cubicBezier",
+      "out": {
+        "$value": [0, 0, 0.58, 1],
+        "$description": "Equivalente della parola chiave CSS ease-out."
+      }
+    }
+  }
+}

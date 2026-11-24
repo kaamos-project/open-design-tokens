@@ -1,0 +1,102 @@
+{
+  "color": {
+    "$type": "color",
+    "$description": "Palette del tema scuro Kaamos. Nomi identici al DESIGN.md di open-ui-web.",
+    "transparent": {
+      "$value": "#00000000"
+    },
+    "primary": {
+      "$value": "#ffffff"
+    },
+    "primary-pressed": {
+      "$value": "#e8e8e8"
+    },
+    "on-primary": {
+      "$value": "#000000"
+    },
+    "ink": {
+      "$value": "#f4f4f6"
+    },
+    "body": {
+      "$value": "#cdcdcd"
+    },
+    "charcoal": {
+      "$value": "#d3d3d4"
+    },
+    "mute": {
+      "$value": "#9c9c9d"
+    },
+    "ash": {
+      "$value": "#6a6b6c"
+    },
+    "stone": {
+      "$value": "#434345"
+    },
+    "on-dark": {
+      "$value": "#ffffff"
+    },
+    "on-dark-mute": {
+      "$value": "rgba(255, 255, 255, 0.72)"
+    },
+    "canvas": {
+      "$value": "#07080a"
+    },
+    "surface": {
+      "$value": "#0d0d0d"
+    },
+    "surface-elevated": {
+      "$value": "#101111"
+    },
+    "surface-card": {
+      "$value": "#121212"
+    },
+    "button-fg": {
+      "$value": "#18191a"
+    },
+    "hairline": {
+      "$value": "#242728"
+    },
+    "hairline-soft": {
+      "$value": "rgba(255, 255, 255, 0.08)"
+    },
+    "hairline-strong": {
+      "$value": "rgba(255, 255, 255, 0.16)"
+    },
+    "accent-blue": {
+      "$value": "#57c1ff"
+    },
+    "accent-blue-soft": {
+      "$value": "rgba(87, 193, 255, 0.15)"
+    },
+    "accent-red": {
+      "$value": "#ff6161"
+    },
+    "accent-red-soft": {
+      "$value": "rgba(255, 97, 97, 0.15)"
+    },
+    "accent-green": {
+      "$value": "#59d499"
+    },
+    "accent-green-soft": {
+      "$value": "rgba(89, 212, 153, 0.15)"
+    },
+    "accent-yellow": {
+      "$value": "#ffc533"
+    },
+    "accent-yellow-soft": {
+      "$value": "rgba(255, 197, 51, 0.15)"
+    },
+    "hero-stripe-start": {
+      "$value": "#ff5757"
+    },
+    "hero-stripe-end": {
+      "$value": "#a1131a"
+    },
+    "key-bg-start": {
+      "$value": "#121212"
+    },
+    "key-bg-end": {
+      "$value": "#0d0d0d"
+    }
+  }
+}

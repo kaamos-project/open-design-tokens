@@ -1,0 +1,41 @@
+/*
+ * Inter, servito in locale (nessuna richiesta a CDN o Google Fonts).
+ * Licenza: SIL Open Font License 1.1, vedi assets/fonts/OFL.txt
+ * Versione: Inter 4.1 (https://github.com/rsms/inter/releases/tag/v4.1)
+ *
+ * Font *variabile*: un solo file contiene tutti i pesi da 100 a 900.
+ */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  /* swap: il testo si vede subito col fallback, poi passa a Inter. */
+  font-display: swap;
+  src:
+    url("../../assets/fonts/InterVariable.woff2") format("woff2-variations"),
+    url("../../assets/fonts/InterVariable.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src:
+    url("../../assets/fonts/InterVariable-Italic.woff2") format("woff2-variations"),
+    url("../../assets/fonts/InterVariable-Italic.woff2") format("woff2");
+}
+
+/*
+ * "Inter Fallback": un font di sistema con metriche corrette per assomigliare
+ * a Inter, così durante lo swap il layout non si sposta.
+ * Liberation Sans e Arimo hanno le metriche di Arial e sono comuni su Linux.
+ */
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial"), local("Liberation Sans"), local("Arimo");
+  ascent-override: 90.44%;
+  descent-override: 22.52%;
+  line-gap-override: 0%;
+  size-adjust: 107.12%;
+}

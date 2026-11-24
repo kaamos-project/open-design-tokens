@@ -1,0 +1,120 @@
+# Release manuale: Actions -> Release -> Run workflow -> scrivi la versione.
+#
+# 1. controlla versione (semver), tag non ancora esistente, note nel CHANGELOG.md
+# 2. genera dist/ partendo da main
+# 3. commit del generato sul branch `release` + tag vX.Y.Z su quel commit
+# 4. GitHub Release con le note del changelog
+# 5. pubblica il pacchetto npm (job separato: se fallisce si rilancia solo lui)
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Versione semver senza 'v' (es. 0.1.0). Deve avere una sezione in CHANGELOG.md."
+        required: true
+        type: string
+
+# Due release in parallelo litigherebbero sul branch `release`.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # push del branch release, tag e GitHub Release
+    env:
+      VERSION: ${{ inputs.version }}
+      TAG: v${{ inputs.version }}
+    steps:
+      - name: Si parte solo da main
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "::error::Lancia la release dal branch main (ora: ${GITHUB_REF})."
+          exit 1
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Versione semver valida
+        run: |
+          if ! [[ "$VERSION" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::'$VERSION' non è una versione semver (es. 1.2.3 o 1.2.3-beta.1)."
+            exit 1
+          fi
+
+      - name: Il tag non esiste già
+        run: |
+          if git ls-remote --exit-code --tags origin "refs/tags/${TAG}" >/dev/null; then
+            echo "::error::Il tag ${TAG} esiste già. I tag non si spostano: scegli una nuova versione."
+            exit 1
+          fi
+
+      - name: Note dal CHANGELOG.md
+        run: node scripts/changelog.mjs "$VERSION" > "$RUNNER_TEMP/notes.md"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Versione nel package.json e build
+        run: |
+          npm pkg set version="$VERSION"
+          npm run build
+
+      - name: Commit sul branch release e tag
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          scripts/commit-release.sh "$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Push di branch e tag
+        run: |
+          git push origin "refs/tags/${TAG}"
+          git push origin "${{ steps.commit.outputs.commit }}:refs/heads/release"
+
+      - name: GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PRERELEASE=""
+          [[ "$VERSION" == *-* ]] && PRERELEASE="--prerelease"
+          gh release create "$TAG" --verify-tag --title "$TAG" \
+            --notes-file "$RUNNER_TEMP/notes.md" $PRERELEASE
+
+  npm:
+    needs: release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # firma di provenienza npm (--provenance)
+    steps:
+      # Pubblichiamo ESATTAMENTE il commit taggato: quello che contiene dist/.
+      - uses: actions/checkout@v4
+        with:
+          ref: v${{ inputs.version }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [ -z "$NODE_AUTH_TOKEN" ]; then
+            echo "::warning::Secret NPM_TOKEN assente: pacchetto npm NON pubblicato (tag e GitHub Release sono stati creati)."
+            npm pack --dry-run
+            exit 0
+          fi
+          TAG_ARGS=()
+          [[ "${{ inputs.version }}" == *-* ]] && TAG_ARGS=(--tag next)
+          npm publish --provenance --access public "${TAG_ARGS[@]}"
