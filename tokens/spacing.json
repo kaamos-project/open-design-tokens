@@ -1,0 +1,13 @@
+{
+  "spacing": {
+    "$type": "dimension",
+    "base": {
+      "$value": "4px",
+      "$description": "Unità della griglia: tutte le spaziature sono multipli di 4px (in Tailwind p-2 = 2 × base = 8px)."
+    },
+    "section": {
+      "$value": "96px",
+      "$description": "Ritmo verticale tra le sezioni di una pagina."
+    }
+  }
+}
