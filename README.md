@@ -26,6 +26,10 @@ dist/        GENERATO, ignorato su main: esiste solo sul branch `release`
 
 3. La CI rifà la build su ogni PR: un JSON rotto o un alias sbagliato la fanno fallire.
 
+Nei token le misure sono in px (Flutter usa pixel logici). Nel CSS spaziature e dimensioni
+del testo diventano `rem` (16px = 1rem), così seguono il font scelto dall'utente nel browser;
+raggi e letter-spacing restano in px.
+
 I nomi delle variabili CSS seguono i namespace di Tailwind (`--color-*`, `--radius-*`,
 `--text-*`, `--font-*`, `--spacing`...), così CSS puro e Tailwind usano gli stessi nomi.
 

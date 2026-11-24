@@ -27,6 +27,19 @@ export function cssCubicBezier([x1, y1, x2, y2]) {
   return `cubic-bezier(${x1}, ${y1}, ${x2}, ${y2})`;
 }
 
+/**
+ * "16px" -> "1rem" (16px = dimensione di default del font del browser).
+ * I token restano in px (Flutter ragiona in pixel logici); solo il CSS li
+ * converte, così spazi e testi seguono la dimensione del font scelta dall'utente.
+ */
+export const ROOT_FONT_SIZE = 16;
+export function rem(value) {
+  const m = /^(-?\d*\.?\d+)px$/.exec(value);
+  if (!m) throw new Error(`Mi aspettavo una misura in px, ho trovato: ${value}`);
+  const n = Number(m[1]) / ROOT_FONT_SIZE;
+  return n === 0 ? "0" : `${Number(n.toFixed(4))}rem`;
+}
+
 /** Un token è una lista di feature OpenType? (tipo non standard, vedi tokens/font.json) */
 export function isFontFeatures(token) {
   return token.$extensions?.["dev.kaamos"]?.kind === "fontFeatures";
@@ -49,11 +62,12 @@ export function cssVariables(tokens) {
         vars.push([`--color-${key}`, v]);
         break;
       case "radius":
+        // I raggi restano in px: un angolo non deve crescere con il testo.
         vars.push([`--radius-${key}`, v]);
         break;
       case "spacing":
         // spacing.base è l'unità di Tailwind: --spacing (p-1 = 1 × --spacing).
-        vars.push([key === "base" ? "--spacing" : `--spacing-${key}`, v]);
+        vars.push([key === "base" ? "--spacing" : `--spacing-${key}`, rem(v)]);
         break;
       case "font": {
         const [kind, name] = rest;
@@ -68,8 +82,9 @@ export function cssVariables(tokens) {
       case "typography":
         // In Tailwind v4 --text-* può portarsi dietro line-height, letter-spacing
         // e font-weight: la classe text-body-md applica tutto insieme.
-        vars.push([`--text-${key}`, v.fontSize]);
+        vars.push([`--text-${key}`, rem(v.fontSize)]);
         vars.push([`--text-${key}--line-height`, String(v.lineHeight)]);
+        // letter-spacing resta in px: sono decimi di pixel, la differenza è invisibile.
         vars.push([`--text-${key}--letter-spacing`, v.letterSpacing]);
         vars.push([`--text-${key}--font-weight`, String(v.fontWeight)]);
         break;
