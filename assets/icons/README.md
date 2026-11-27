@@ -1,4 +1,4 @@
-# Icone
+# Icons
 
-Vuota per ora: le icone condivise (SVG sorgente) arriveranno quando sceglieremo un set.
-Oggi open-ui-web usa pochi SVG scritti direttamente nei componenti.
+Empty for now: the shared icons (source SVGs) will arrive once we pick a set.
+Today open-ui-web uses a few SVGs written directly in the components.
