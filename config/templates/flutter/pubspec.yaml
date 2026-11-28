@@ -21,3 +21,7 @@ flutter:
         - asset: fonts/InterVariable.ttf
         - asset: fonts/InterVariable-Italic.ttf
           style: italic
+    # Lucide icons, used through KaamosIcons (lib/kaamos_icons.dart).
+    - family: KaamosIcons
+      fonts:
+        - asset: fonts/KaamosIcons.ttf

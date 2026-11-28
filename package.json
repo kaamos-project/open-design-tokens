@@ -1,6 +1,6 @@
 {
   "name": "@kaamos-project/open-design-tokens",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Kaamos design tokens (W3C DTCG) and shared assets, generated for CSS, Tailwind CSS v4 and Flutter.",
   "license": "GPL-3.0-only",
   "repository": {
@@ -11,6 +11,7 @@
   "files": [
     "dist/css",
     "dist/tailwind",
+    "dist/icons",
     "assets/fonts/*.woff2",
     "assets/fonts/OFL.txt"
   ],
@@ -19,6 +20,12 @@
     "./fonts.css": "./dist/css/fonts.css",
     "./tailwind.css": "./dist/tailwind/theme.css",
     "./fonts/*": "./assets/fonts/*",
+    "./icons": {
+      "types": "./dist/icons/index.d.ts",
+      "default": "./dist/icons/index.js"
+    },
+    "./icons/sprite.svg": "./dist/icons/sprite.svg",
+    "./icons/icons.json": "./dist/icons/icons.json",
     "./package.json": "./package.json"
   },
   "sideEffects": [
@@ -28,9 +35,14 @@
     "access": "public"
   },
   "scripts": {
-    "build": "node config/build.mjs"
+    "build": "node config/build.mjs",
+    "test": "node --test \"test/**/*.test.mjs\"",
+    "icons:update": "node scripts/update-lucide.mjs"
   },
   "devDependencies": {
-    "style-dictionary": "5.8.0"
+    "harfbuzzjs": "1.6.4",
+    "lucide-static": "1.83.0",
+    "style-dictionary": "5.8.0",
+    "subset-font": "2.4.0"
   }
 }

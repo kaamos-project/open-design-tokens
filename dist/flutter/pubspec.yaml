@@ -1,7 +1,7 @@
 # GENERATO da open-design-tokens: non modificare a mano.
 name: kaamos_design_tokens
 description: Kaamos design tokens and the Inter font for Flutter, generated from open-design-tokens.
-version: 0.1.0
+version: 0.2.0
 repository: https://github.com/kaamos-project/open-design-tokens
 # Non pubblichiamo su pub.dev: si usa come dipendenza git (ref = tag, path = dist/flutter).
 publish_to: none
@@ -21,3 +21,7 @@ flutter:
         - asset: fonts/InterVariable.ttf
         - asset: fonts/InterVariable-Italic.ttf
           style: italic
+    # Lucide icons, used through KaamosIcons (lib/kaamos_icons.dart).
+    - family: KaamosIcons
+      fonts:
+        - asset: fonts/KaamosIcons.ttf
