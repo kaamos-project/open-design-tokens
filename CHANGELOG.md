@@ -9,6 +9,8 @@ fai il merge su main, poi lancia il workflow **Release** con la stessa versione.
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-28
+
 ### Aggiunto
 
 - Icone Lucide 1.83.0 (set completo, 2140 icone, licenza ISC) generate dal pacchetto npm `lucide-static`:
