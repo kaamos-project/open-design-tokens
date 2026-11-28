@@ -9,6 +9,14 @@ fai il merge su main, poi lancia il workflow **Release** con la stessa versione.
 
 ## [Unreleased]
 
+### Aggiunto
+
+- Icone Lucide 1.83.0 (set completo, 2140 icone, licenza ISC) generate dal pacchetto npm `lucide-static`:
+  - Flutter: font `KaamosIcons` e classe `KaamosIcons` (`package:kaamos_design_tokens/kaamos_icons.dart`) con una `IconData` const per icona;
+  - web: `@kaamos-project/open-design-tokens/icons` (un export per icona), `icons/sprite.svg`, `icons/icons.json`.
+- `npm test` con i test delle icone e controllo del tree-shaking delle icone in CI.
+- `npm run icons:update` per aggiornare Lucide.
+
 ## [0.1.0] - 2026-11-24
 
 ### Aggiunto

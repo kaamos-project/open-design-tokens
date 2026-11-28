@@ -16,6 +16,9 @@ The package exports:
 | `@kaamos-project/open-design-tokens/fonts.css` | `@font-face` for Inter |
 | `@kaamos-project/open-design-tokens/tailwind.css` | Tailwind v4 `@theme` |
 | `@kaamos-project/open-design-tokens/fonts/*` | The `.woff2` files |
+| `@kaamos-project/open-design-tokens/icons` | Lucide icons, one ES export per icon ([Icons](icons.md#web)) |
+| `@kaamos-project/open-design-tokens/icons/sprite.svg` | All the icons as an SVG sprite |
+| `@kaamos-project/open-design-tokens/icons/icons.json` | Icon names, codepoints and search tags |
 
 With Tailwind v4:
 
@@ -57,7 +60,15 @@ Container(
 
 `ref` must be a **tag**: `dist/flutter` only exists on the commits of the `release` branch, and tags are never moved. See [Releases](releases.md).
 
-The Inter font (SIL OFL 1.1) is bundled in the package.
+The Inter font (SIL OFL 1.1) is bundled in the package, and so are the Lucide icons (ISC):
+
+```dart
+import 'package:kaamos_design_tokens/kaamos_icons.dart';
+
+const Icon(KaamosIcons.inbox);
+```
+
+See [Icons](icons.md#flutter), and read the tree-shaking rules before building an icon from a runtime value.
 
 ## Who uses them
 
@@ -66,5 +77,6 @@ The Inter font (SIL OFL 1.1) is bundled in the package.
 
 ## See also
 
+- [Icons](icons.md)
 - [Token format](token-format.md)
 - [Releases](releases.md)

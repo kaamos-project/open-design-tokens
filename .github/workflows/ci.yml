@@ -29,6 +29,10 @@ jobs:
       # o due token generano lo stesso nome.
       - run: npm run build
 
+      # Icons: font without GSUB, one Dart constant and one JS export per icon,
+      # the font can be subset. See test/icons.test.mjs.
+      - run: npm test
+
       # Mostra cosa finirebbe nel pacchetto npm, senza pubblicarlo.
       - run: npm pack --dry-run
 
@@ -46,3 +50,8 @@ jobs:
         run: |
           flutter pub get
           flutter analyze --fatal-infos
+
+      # A real Flutter web app using 3 icons: the release build must shrink the
+      # icon font to a few KB. See docs/icons.md#tree-shaking.
+      - name: Icon tree-shaking
+        run: scripts/check-icon-tree-shaking.sh

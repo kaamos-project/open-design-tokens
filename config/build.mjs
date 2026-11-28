@@ -5,6 +5,7 @@
  *   dist/css/fonts.css        @font-face di Inter
  *   dist/tailwind/theme.css   blocco @theme per Tailwind v4
  *   dist/flutter/             pacchetto Dart completo (pubspec, lib, font)
+ *   dist/icons/               icone Lucide per il web (vedi config/icons.mjs)
  *
  * Uso: npm run build
  */
@@ -12,6 +13,7 @@ import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import StyleDictionary from "style-dictionary";
 import { cssVariablesFormat, tailwindThemeFormat } from "./formats/css.mjs";
 import { dartFormat, DART_PACKAGE } from "./formats/dart.mjs";
+import { buildIcons } from "./icons.mjs";
 
 const root = new URL("../", import.meta.url);
 const path = (p) => new URL(p, root);
@@ -67,5 +69,9 @@ await mkdir(new URL("fonts/", flutter), { recursive: true });
 for (const f of ["InterVariable.ttf", "InterVariable-Italic.ttf", "OFL.txt"]) {
   await cp(path(`assets/fonts/${f}`), new URL(`fonts/${f}`, flutter));
 }
+
+// Icons (Lucide): icon font + KaamosIcons for Flutter, ES modules and sprite for the web.
+const { icons, version: lucideVersion } = await buildIcons({ root, dartPackage: DART_PACKAGE });
+console.log(`${icons.length} Lucide ${lucideVersion} icons generated`);
 
 console.log(`\nToken ${version} generati in dist/`);

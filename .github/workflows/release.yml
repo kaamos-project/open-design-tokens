@@ -67,6 +67,7 @@ jobs:
         run: |
           npm pkg set version="$VERSION"
           npm run build
+          npm test
 
       - name: Commit sul branch release e tag
         id: commit

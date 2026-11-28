@@ -4,9 +4,10 @@ Design tokens and shared assets of the **Kaamos** design system: a single source
 
 ```
 tokens/      token sources, W3C DTCG format, one file per category
-assets/      shared assets: fonts/ (Inter 4.1, SIL OFL 1.1), icons/
-config/      Style Dictionary build: build.mjs, formats/, templates/
-scripts/     changelog.mjs (release notes), commit-release.sh
+assets/      shared assets: fonts/ (Inter 4.1, SIL OFL 1.1)
+config/      Style Dictionary build: build.mjs, formats/, templates/; icons.mjs (Lucide)
+scripts/     changelog.mjs, commit-release.sh, update-lucide.mjs, check-icon-tree-shaking.sh
+test/        tests of the generated files
 dist/        GENERATED, ignored on main: only exists on the `release` branch
 ```
 
@@ -15,6 +16,7 @@ dist/        GENERATED, ignored on main: only exists on the `release` branch
 ```sh
 npm ci
 npm run build
+npm test
 ```
 
 Use it from the web:
@@ -32,6 +34,7 @@ Everything lives in the wiki in [`docs/`](docs/README.md):
 - [Getting started](docs/getting-started.md)
 - [Token format](docs/token-format.md)
 - [Build pipeline](docs/build-pipeline.md)
+- [Icons](docs/icons.md)
 - [Using the tokens](docs/using-tokens.md)
 - [Releases](docs/releases.md)
 - [Decisions](docs/decisions.md)
@@ -40,3 +43,4 @@ Everything lives in the wiki in [`docs/`](docs/README.md):
 
 - Code and tokens: GPL-3.0-only, see [LICENSE](LICENSE).
 - Inter font: SIL Open Font License 1.1, see [assets/fonts/OFL.txt](assets/fonts/OFL.txt).
+- [Lucide](https://lucide.dev) icons: ISC License (icons derived from Feather: MIT), copied next to the generated icons.
