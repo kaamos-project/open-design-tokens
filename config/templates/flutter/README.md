@@ -18,4 +18,13 @@ import 'package:kaamos_design_tokens/kaamos_design_tokens.dart';
 Text('Hello', style: KaamosTypography.bodyMd.copyWith(color: KaamosColors.body));
 ```
 
-The Inter font (SIL OFL 1.1, see `fonts/OFL.txt`) is included in the package.
+```dart
+import 'package:kaamos_design_tokens/kaamos_icons.dart';
+
+const Icon(KaamosIcons.mail);
+```
+
+Included in the package:
+
+- the Inter font (SIL OFL 1.1, see `fonts/OFL.txt`);
+- the [Lucide](https://lucide.dev) icons as the `KaamosIcons` font (ISC License, see `fonts/LUCIDE-LICENSE.txt`). Use them only as `const`: release builds keep just the icons you use.

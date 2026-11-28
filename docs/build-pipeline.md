@@ -13,6 +13,7 @@ flowchart TD
     p1 --> extra["copy non-token files:<br/>fonts.css, pubspec.yaml (with version),<br/>Flutter README, LICENSE, Inter .ttf"]
     p2 --> extra
     p3 --> extra
+    extra --> icons["config/icons.mjs: Lucide icons<br/>KaamosIcons.ttf, kaamos_icons.dart, dist/icons/"]
 ```
 
 ## Output
@@ -22,7 +23,8 @@ flowchart TD
 | `dist/css/tokens.css` | CSS variables in `:root`, for the web without Tailwind |
 | `dist/css/fonts.css` | `@font-face` for Inter (copied from `config/templates/fonts.css`) |
 | `dist/tailwind/theme.css` | Tailwind v4 `@theme` block: generates classes (`bg-canvas`, `text-body-md`…) and variables |
-| `dist/flutter/` | The complete Dart package `kaamos_design_tokens`: `pubspec.yaml`, `lib/`, fonts, license |
+| `dist/flutter/` | The complete Dart package `kaamos_design_tokens`: `pubspec.yaml`, `lib/` (tokens and `kaamos_icons.dart`), fonts (Inter and `KaamosIcons.ttf`), licenses |
+| `dist/icons/` | Lucide icons for the web: `index.js` (+ `.d.ts`), `sprite.svg`, `icons.json`, license. See [Icons](icons.md) |
 
 ## Strict by design
 
@@ -50,8 +52,13 @@ In `typography`, Tailwind v4 lets `--text-*` carry line height, letter spacing a
 
 Flutter can't read `.woff2`, so `assets/fonts/` holds Inter both as `.woff2` (web, in the npm package) and `.ttf` (copied into the Flutter package).
 
+## Icons
+
+Icons aren't tokens, so Style Dictionary doesn't see them: after the token build, `buildIcons()` in `config/icons.mjs` reads `lucide-static` and writes the icon font, the Dart class and the web files. See [Icons](icons.md).
+
 ## See also
 
+- [Icons](icons.md)
 - [Token format](token-format.md)
 - [Using the tokens](using-tokens.md)
 - [Decisions](decisions.md#style-dictionary-with-custom-formats)

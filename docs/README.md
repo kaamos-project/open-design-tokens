@@ -11,6 +11,10 @@ flowchart LR
     css --> web["open-ui-web and web apps"]
     tw --> web
     dart --> flutter["open-ui-flutter and Flutter apps"]
+    lucide["lucide-static<br/>(Lucide icons)"] --> icons["config/icons.mjs"]
+    icons --> dart
+    icons --> webicons["dist/icons/"]
+    webicons --> web
 ```
 
 ## Pages
@@ -20,6 +24,7 @@ flowchart LR
 | [Getting started](getting-started.md) | Install, build, the checks CI runs, repo layout |
 | [Token format](token-format.md) | DTCG files, categories, aliases, units, the custom `fontFeatures` kind |
 | [Build pipeline](build-pipeline.md) | How Style Dictionary and the custom formats turn tokens into CSS, Tailwind and Dart |
+| [Icons](icons.md) | The Lucide set: icon font and `KaamosIcons` for Flutter, modules and sprite for the web, tree-shaking, updating Lucide |
 | [Using the tokens](using-tokens.md) | From npm (CSS, Tailwind) and from git (Flutter) |
 | [Releases](releases.md) | The manual release workflow, the `release` branch, npm Trusted Publishing |
 | [Decisions](decisions.md) | The key choices and their trade-offs |
